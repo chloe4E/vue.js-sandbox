@@ -1,11 +1,36 @@
 <template>
-  <router-view> </router-view>
+  <router-link to="/cart">shoppping cart</router-link>
+  <router-view
+    :shoppingCart="shoppingCart"
+    :products="products"
+    @addToCart="addToCart"
+  >
+  </router-view>
 </template>
 
 <script>
+import products from "./pages/products";
 export default {
   name: "App",
-  components: {},
+  data() {
+    return {
+      shoppingCartIds: [],
+      products,
+    };
+  },
+  computed: {
+    shoppingCart() {
+      return this.shoppingCartIds.map((id) => {
+        return this.products.find((p) => p.id === id);
+      });
+    },
+  },
+  methods: {
+    addToCart(id) {
+      this.shoppingCartIds.push(id);
+      console.log(this.shoppingCartIds);
+    },
+  },
 };
 </script>
 
